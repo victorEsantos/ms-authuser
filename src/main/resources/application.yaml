@@ -1,0 +1,18 @@
+server:
+  port: 8087
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/eadauthuser
+    username: "******"
+    password: "*****"
+  jpa:
+    hibernate:
+#      criar tabelas automatico
+      ddl-auto: update
+      dialect: org.jibernate.dialect.PostgreSQLDialect
+      jdbc:
+        lob.non-contextual-creation: true
+    properties:
+      hibernate:
+        show_sql: true
