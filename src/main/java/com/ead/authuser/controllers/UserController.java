@@ -26,10 +26,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    public final String USER_NOT_FOUND = "User not found.";
-    public final String USER_DELETED = "User deleted.";
-    public final String MISS_PASS = "Missmatch password!";
-    public final String PASS_UPDATED = "Password updated.";
+    public static final String USER_NOT_FOUND = "User not found.";
+    public static final String USER_DELETED = "User deleted.";
+    public static final String MISS_PASS = "Missmatch password!";
+    public static final String PASS_UPDATED = "Password updated.";
 
     @GetMapping
     public ResponseEntity<List<UserModel>> getAllUsers() {
@@ -81,7 +81,7 @@ public class UserController {
                                                  @RequestBody @Validated(UserDto.UserView.PasswordPut.class)
                                                  @JsonView(UserDto.UserView.PasswordPut.class) UserDto dto) {
         var userModel = userService.findById(userId).orElse(null);
-        boolean isPassEquals = nonNull(dto.getPassword()) ? dto.getPassword().equals(dto.getOldPassword()) : false;
+        boolean isPassEquals = nonNull(dto.getPassword()) && dto.getPassword().equals(dto.getOldPassword());
 
         if (userModel == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(USER_NOT_FOUND);
