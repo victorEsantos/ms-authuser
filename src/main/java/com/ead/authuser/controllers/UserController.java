@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -61,7 +62,8 @@ public class UserController {
 
     @PutMapping("/{userId}")
     public ResponseEntity<Object> updateUser(@PathVariable(value = "userId") UUID userId,
-                                             @RequestBody @JsonView(UserDto.UserView.RegistrationPost.class) UserDto dto) {
+                                             @RequestBody @Validated(UserDto.UserView.UserPut.class)
+                                             @JsonView(UserDto.UserView.RegistrationPost.class) UserDto dto) {
         var userModel = userService.findById(userId).orElse(null);
         if (nonNull(userModel)) {
             userModel.update(dto);
@@ -76,13 +78,14 @@ public class UserController {
 
     @PutMapping("/{userId}/password")
     public ResponseEntity<Object> updatePassword(@PathVariable(value = "userId") UUID userId,
-                                             @RequestBody @JsonView(UserDto.UserView.PasswordPut.class) UserDto dto) {
+                                                 @RequestBody @Validated(UserDto.UserView.PasswordPut.class)
+                                                 @JsonView(UserDto.UserView.PasswordPut.class) UserDto dto) {
         var userModel = userService.findById(userId).orElse(null);
         boolean isPassEquals = nonNull(dto.getPassword()) ? dto.getPassword().equals(dto.getOldPassword()) : false;
 
-        if(userModel == null) {
+        if (userModel == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(USER_NOT_FOUND);
-        }else if (isPassEquals) {
+        } else if (isPassEquals) {
             userModel.setPassword(dto.getPassword());
             userModel.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
 
@@ -97,7 +100,8 @@ public class UserController {
 
     @PutMapping("/{userId}/image")
     public ResponseEntity<Object> updateImage(@PathVariable(value = "userId") UUID userId,
-                                                 @RequestBody @JsonView(UserDto.UserView.ImagePut.class) UserDto dto) {
+                                              @RequestBody @Validated(UserDto.UserView.ImagePut.class)
+                                              @JsonView(UserDto.UserView.ImagePut.class) UserDto dto) {
         var userModel = userService.findById(userId).orElse(null);
 
         if (nonNull(userModel)) {
