@@ -21,6 +21,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static java.util.Objects.nonNull;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -40,11 +42,14 @@ public class UserController {
             @PageableDefault(page = 0, size = 10, sort = "userId", direction = Sort.Direction.ASC)
                                                        Pageable pageable) {
         Page<UserModel> userModelPage = userService.findAll(spec, pageable);
+        if(!userModelPage.isEmpty()){
+            userModelPage.forEach(user -> user.add(linkTo(methodOn(UserController.class).getOneUSer(user.getUserId())).withSelfRel()));
+        }
         return ResponseEntity.status(HttpStatus.OK).body(userModelPage);
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<Object> getAllUsers(@PathVariable UUID userId) {
+    public ResponseEntity<Object> getOneUSer(@PathVariable UUID userId) {
         Optional<UserModel> userModel = userService.findById(userId);
 
         if (!userModel.isPresent()) {
