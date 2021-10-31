@@ -39,10 +39,9 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<Page<UserModel>> getAllUsers(SpecificationTemplate.UserSpec spec,
-            @PageableDefault(page = 0, size = 10, sort = "userId", direction = Sort.Direction.ASC)
-                                                       Pageable pageable) {
+                                                       @PageableDefault(page = 0, size = 10, sort = "userId", direction = Sort.Direction.ASC) Pageable pageable) {
         Page<UserModel> userModelPage = userService.findAll(spec, pageable);
-        if(!userModelPage.isEmpty()){
+        if (!userModelPage.isEmpty()) {
             userModelPage.forEach(user -> user.add(linkTo(methodOn(UserController.class).getOneUSer(user.getUserId())).withSelfRel()));
         }
         return ResponseEntity.status(HttpStatus.OK).body(userModelPage);
