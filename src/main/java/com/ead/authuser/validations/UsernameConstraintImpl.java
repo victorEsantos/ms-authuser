@@ -3,16 +3,16 @@ package com.ead.authuser.validations;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class UsernameConstraintImpl implements ConstraintValidator<USernameConstraint, String> {
+public class UsernameConstraintImpl implements ConstraintValidator<UsernameConstraint, String> {
 
 
     @Override
-    public void initialize(USernameConstraint constraintAnnotation) {
+    public void initialize(UsernameConstraint constraintAnnotation) {
         ConstraintValidator.super.initialize(constraintAnnotation);
     }
 
     @Override
     public boolean isValid(String username, ConstraintValidatorContext constraintValidatorContext) {
-        return username == null || username.trim().isEmpty() || username.contains(" ");
+        return !(username == null || username.trim().isEmpty() || username.contains(" "));
     }
 }
