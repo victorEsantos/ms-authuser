@@ -16,3 +16,15 @@ spring:
     properties:
       hibernate:
         show_sql: true
+#  formata cor texto cmd windows
+  output:
+    ansi:
+      enabled: Always
+
+
+logging:
+  level:
+    com.ead: TRACE
+    root: INFO
+    org.springframework.web: DEBUG
+    org.hibernate: INFO
