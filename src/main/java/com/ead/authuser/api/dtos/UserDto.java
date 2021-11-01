@@ -1,6 +1,6 @@
-package com.ead.authuser.dtos;
+package com.ead.authuser.api.dtos;
 
-import com.ead.authuser.validations.UsernameConstraint;
+import com.ead.authuser.validation.UsernameConstraint;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
@@ -21,7 +21,7 @@ public class UserDto {
         public static interface ImagePut {}
     }
 
-    private UUID userId;
+    private UUID id;
 
     @NotBlank(groups = UserView.RegistrationPost.class)
     @Size(min = 4, max = 50, groups = UserView.RegistrationPost.class)

@@ -1,8 +1,8 @@
-package com.ead.authuser.models;
+package com.ead.authuser.domain.model;
 
-import com.ead.authuser.dtos.UserDto;
-import com.ead.authuser.enums.UserStatus;
-import com.ead.authuser.enums.UserType;
+import com.ead.authuser.domain.enums.UserStatus;
+import com.ead.authuser.domain.enums.UserType;
+import com.ead.authuser.service.command.UpdateUserCommand;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -22,14 +22,14 @@ import java.util.UUID;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Table(name = "TB_USERS")
-public class UserModel extends RepresentationModel<UserModel> implements Serializable {
+public class User extends RepresentationModel<User> implements Serializable {
     public static final long serialVersionUID = -7444152881348052726L;
 
     @Builder
-    public UserModel(UUID userId, String username, String email, String password, String fullName, UserStatus userStatus,
-                     UserType userType, String phoneNumber, String cpf, String imageUrl, LocalDateTime creationDate,
-                     LocalDateTime lastUpdateDate){
-        this.userId = userId;
+    public User(UUID id, String username, String email, String password, String fullName, UserStatus userStatus,
+                UserType userType, String phoneNumber, String cpf, String imageUrl, LocalDateTime creationDate,
+                LocalDateTime lastUpdateDate){
+        this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
@@ -44,13 +44,13 @@ public class UserModel extends RepresentationModel<UserModel> implements Seriali
 
     }
 
-    public UserModel() {
+    public User() {
 
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID userId;
+    private UUID id;
     @Column(nullable = false, unique = true, length = 50)
     private String username;
     @Column(nullable = false, unique = true, length = 50)
@@ -79,10 +79,10 @@ public class UserModel extends RepresentationModel<UserModel> implements Seriali
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private LocalDateTime lastUpdateDate;
 
-    public void update(UserDto dto) {
-        this.setFullName(dto.getFullName());
-        this.setPhoneNumber(dto.getPhoneNumber());
-        this.setCpf(dto.getCpf());
+    public void update(UpdateUserCommand cmd) {
+        this.setFullName(cmd.getFullName());
+        this.setPhoneNumber(cmd.getPhoneNumber());
+        this.setCpf(cmd.getCpf());
         this.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
     }
 }

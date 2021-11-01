@@ -1,4 +1,4 @@
-package com.ead.authuser.validations;
+package com.ead.authuser.validation;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

@@ -1,9 +1,9 @@
-package com.ead.authuser.services.impl;
+package com.ead.authuser.service.impl;
 
-import com.ead.authuser.models.UserModel;
-import com.ead.authuser.repositories.UserRepository;
-import com.ead.authuser.services.UserService;
-import com.ead.authuser.specifications.SpecificationTemplate;
+import com.ead.authuser.domain.model.User;
+import com.ead.authuser.repository.UserRepository;
+import com.ead.authuser.service.UserService;
+import com.ead.authuser.specification.SpecificationTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,23 +20,23 @@ public class UserServiceImpl implements UserService {
     UserRepository repository;
 
     @Override
-    public List<UserModel> findAll() {
+    public List<User> findAll() {
         return repository.findAll();
     }
 
     @Override
-    public Optional<UserModel> findById(UUID userId) {
+    public Optional<User> findById(UUID userId) {
         return repository.findById(userId);
     }
 
     @Override
-    public void delete(UserModel userId) {
+    public void delete(User userId) {
         repository.delete(userId);
     }
 
     @Override
-    public void save(UserModel userModel) {
-        repository.save(userModel);
+    public void save(User user) {
+        repository.save(user);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<UserModel> findAll(SpecificationTemplate.UserSpec spec, Pageable pageable) {
+    public Page<User> findAll(SpecificationTemplate.UserSpec spec, Pageable pageable) {
         return repository.findAll(spec, pageable);
     }
 }
