@@ -79,10 +79,10 @@ public class User extends RepresentationModel<User> implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private LocalDateTime lastUpdateDate;
 
-    public void update(UpdateUserCommand cmd) {
-        this.setFullName(cmd.getFullName());
-        this.setPhoneNumber(cmd.getPhoneNumber());
-        this.setCpf(cmd.getCpf());
+    public void update(String fullName, String phoneNumber, String cpf) {
+        this.setFullName(fullName);
+        this.setPhoneNumber(phoneNumber);
+        this.setCpf(cpf);
         this.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
     }
 }

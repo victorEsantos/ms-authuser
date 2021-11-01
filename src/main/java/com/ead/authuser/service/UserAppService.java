@@ -73,7 +73,7 @@ public class UserAppService {
     public void handle(UpdateUserCommand cmd) {
         var user = repository.findById(cmd.getId()).orElseThrow(() -> new RuntimeException("USER NOT FOUND"));
         if (nonNull(user)) {
-            user.update(cmd);
+            user.update(cmd.getFullName(), cmd.getPhoneNumber(), cmd.getCpf());
 
             repository.save(user);
         }
