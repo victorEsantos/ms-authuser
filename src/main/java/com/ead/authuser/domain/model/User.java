@@ -28,7 +28,7 @@ public class User extends RepresentationModel<User> implements Serializable {
     @Builder
     public User(UUID id, String username, String email, String password, String fullName, UserStatus userStatus,
                 UserType userType, String phoneNumber, String cpf, String imageUrl, LocalDateTime creationDate,
-                LocalDateTime lastUpdateDate){
+                LocalDateTime lastUpdateDate) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -73,10 +73,10 @@ public class User extends RepresentationModel<User> implements Serializable {
     @Column
     private String imageUrl;
     @Column(nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private LocalDateTime creationDate;
     @Column(nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private LocalDateTime lastUpdateDate;
 
     public void update(UpdateUserCommand cmd) {

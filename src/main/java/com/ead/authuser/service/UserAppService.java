@@ -67,7 +67,6 @@ public class UserAppService {
             user.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
 
             repository.save(user);
-
         }
     }
 

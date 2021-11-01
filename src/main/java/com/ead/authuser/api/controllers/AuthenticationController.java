@@ -57,7 +57,6 @@ public class AuthenticationController {
         var uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/").path(id.toString()).build().toUri();
 
         return ResponseEntity.status(HttpStatus.CREATED).body(uri);
-
     }
 
     @GetMapping("/")
