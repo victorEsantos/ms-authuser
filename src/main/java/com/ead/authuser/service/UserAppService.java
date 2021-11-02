@@ -23,7 +23,7 @@ public class UserAppService {
     @Autowired
     UserRepository repository;
 
-    public UUID handle(final RegisterUserCommand cmd) {
+    public User handle(final RegisterUserCommand cmd) {
         User user = User
                 .builder()
                 .id(UUID.randomUUID())
@@ -41,7 +41,7 @@ public class UserAppService {
 
         repository.save(user);
 
-        return user.getId();
+        return user;
     }
 
     public void handle(final UpdateUserPasswordCommand cmd) {

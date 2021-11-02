@@ -51,10 +51,9 @@ public class AuthenticationController {
                 .build();
 
 
-        UUID id = service.handle(cmd);
-
-        log.debug("User saved id: {}", id);
-        var uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/").path(id.toString()).build().toUri();
+        var user = service.handle(cmd);
+        log.debug("User saved id: {}", user.getId());
+        var uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/").path(user.getId().toString()).build().toUri();
 
         return ResponseEntity.status(HttpStatus.CREATED).body(uri);
     }
