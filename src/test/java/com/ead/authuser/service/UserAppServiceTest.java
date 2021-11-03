@@ -3,18 +3,17 @@ package com.ead.authuser.service;
 import com.ead.authuser.domain.model.User;
 import com.ead.authuser.repository.UserRepository;
 import com.ead.authuser.service.command.RegisterUserCommand;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-@RunWith(SpringRunner.class)
+@SpringBootTest
 public class UserAppServiceTest {
     @Mock
     UserRepository repository;
