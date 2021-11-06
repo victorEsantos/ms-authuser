@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 import java.util.UUID;
 
+import static java.util.Objects.nonNull;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -44,12 +45,20 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<Page<User>> getAllUsers(SpecificationTemplate.UserSpec spec,
-                                                  @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
-        Page<User> user = queryService.findAll(spec, pageable);
-        if (!user.isEmpty()) {
-            user.forEach(usr -> usr.add(linkTo(methodOn(UserController.class).getOneUSer(usr.getId())).withSelfRel()));
+                                                  @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
+                                                  @RequestParam(required = false) UUID courseId) {
+        Page<User> userPage = null;
+
+        if(courseId != null){
+            userPage = queryService.findAll(SpecificationTemplate.userCourseId(courseId).and(spec), pageable);
+        }else{
+            userPage = queryService.findAll(spec, pageable);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(user);
+
+        if (!userPage.isEmpty()) {
+            userPage.forEach(usr -> usr.add(linkTo(methodOn(UserController.class).getOneUSer(usr.getId())).withSelfRel()));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(userPage);
     }
 
     @GetMapping("/{id}")

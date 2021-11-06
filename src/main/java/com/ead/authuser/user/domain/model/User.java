@@ -19,7 +19,6 @@ import java.time.ZoneId;
 import java.util.Set;
 import java.util.UUID;
 
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)

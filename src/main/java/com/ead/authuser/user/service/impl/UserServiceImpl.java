@@ -7,6 +7,7 @@ import com.ead.authuser.user.specification.SpecificationTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,7 +51,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> findAll(SpecificationTemplate.UserSpec spec, Pageable pageable) {
+    public Page<User> findAll(Specification<User> spec, Pageable pageable) {
         return repository.findAll(spec, pageable);
     }
 }
