@@ -1,10 +1,12 @@
 package com.ead.authuser.user.domain.model;
 
+import com.ead.authuser.course.domain.model.UserCourse;
 import com.ead.authuser.user.domain.enums.UserStatus;
 import com.ead.authuser.user.domain.enums.UserType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,6 +16,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Set;
 import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
@@ -23,29 +26,6 @@ import java.util.UUID;
 @Table(name = "TB_USERS")
 public class User extends RepresentationModel<User> implements Serializable {
     public static final long serialVersionUID = -7444152881348052726L;
-
-    @Builder
-    public User(UUID id, String username, String email, String password, String fullName, UserStatus userStatus,
-                UserType userType, String phoneNumber, String cpf, String imageUrl, LocalDateTime creationDate,
-                LocalDateTime lastUpdateDate) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.fullName = fullName;
-        this.userStatus = userStatus;
-        this.userType = userType;
-        this.phoneNumber = phoneNumber;
-        this.cpf = cpf;
-        this.imageUrl = imageUrl;
-        this.creationDate = creationDate;
-        this.lastUpdateDate = lastUpdateDate;
-
-    }
-
-    public User() {
-
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -77,6 +57,33 @@ public class User extends RepresentationModel<User> implements Serializable {
     @Column(nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private LocalDateTime lastUpdateDate;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private Set<UserCourse> userCourses;
+
+    @Builder
+    public User(UUID id, String username, String email, String password, String fullName, UserStatus userStatus,
+                UserType userType, String phoneNumber, String cpf, String imageUrl, LocalDateTime creationDate,
+                LocalDateTime lastUpdateDate) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.fullName = fullName;
+        this.userStatus = userStatus;
+        this.userType = userType;
+        this.phoneNumber = phoneNumber;
+        this.cpf = cpf;
+        this.imageUrl = imageUrl;
+        this.creationDate = creationDate;
+        this.lastUpdateDate = lastUpdateDate;
+
+    }
+
+    public User() {
+
+    }
 
     public void update(String fullName, String phoneNumber, String cpf) {
         this.setFullName(fullName);
