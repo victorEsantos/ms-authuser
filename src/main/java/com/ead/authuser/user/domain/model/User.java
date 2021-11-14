@@ -58,7 +58,7 @@ public class User extends RepresentationModel<User> implements Serializable {
     private LocalDateTime lastUpdateDate;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<UserCourse> userCourses;
 
     @Builder
