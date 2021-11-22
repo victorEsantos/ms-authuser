@@ -5,6 +5,7 @@ import com.ead.authuser.user.domain.enums.UserType;
 import com.ead.authuser.user.domain.model.User;
 import com.ead.authuser.user.repository.UserRepository;
 import com.ead.authuser.user.service.command.*;
+import com.ead.authuser.user.service.exception.ObjectNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,8 +46,7 @@ public class UserAppService {
     }
 
     public void handle(final UpdateUserPasswordCommand cmd) {
-//      Todo implementar @ExceptionHandler
-        var user = repository.findById(cmd.getId()).orElseThrow(() -> new RuntimeException("USER NOT FOUND"));
+        var user = repository.findById(cmd.getId()).orElseThrow(() -> new ObjectNotFoundException("USER NOT FOUND"));
         boolean isPassEquals = nonNull(cmd.getOldPassword()) && cmd.getOldPassword().equals(user.getPassword());
 
         if (isPassEquals) {
@@ -60,7 +60,7 @@ public class UserAppService {
     }
 
     public void handle(UpdateUserImageCommand cmd) {
-        var user = repository.findById(cmd.getId()).orElseThrow(() -> new RuntimeException("USER NOT FOUND"));
+        var user = repository.findById(cmd.getId()).orElseThrow(() -> new ObjectNotFoundException("USER NOT FOUND"));
 
         if (nonNull(user)) {
             user.setImageUrl(cmd.getImageUrl());
@@ -71,7 +71,7 @@ public class UserAppService {
     }
 
     public void handle(UpdateUserCommand cmd) {
-        var user = repository.findById(cmd.getId()).orElseThrow(() -> new RuntimeException("USER NOT FOUND"));
+        var user = repository.findById(cmd.getId()).orElseThrow(() -> new ObjectNotFoundException("USER NOT FOUND"));
         if (nonNull(user)) {
             user.update(cmd.getFullName(), cmd.getPhoneNumber(), cmd.getCpf());
 
@@ -80,7 +80,7 @@ public class UserAppService {
     }
 
     public void handle(DeleteUserCommand cmd) {
-        var user = repository.findById(cmd.getId()).orElseThrow(() -> new RuntimeException("USER NOT FOUND"));
+        var user = repository.findById(cmd.getId()).orElseThrow(() -> new ObjectNotFoundException("USER NOT FOUND"));
         repository.delete(user);
     }
 }
