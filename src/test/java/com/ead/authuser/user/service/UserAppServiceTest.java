@@ -3,6 +3,7 @@ package com.ead.authuser.user.service;
 import com.ead.authuser.user.domain.model.User;
 import com.ead.authuser.user.repository.UserRepository;
 import com.ead.authuser.user.service.command.RegisterUserCommand;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -14,6 +15,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
+@DisplayName("Teste Serviço de usuario")
 public class UserAppServiceTest {
     @Mock
     UserRepository repository;
@@ -22,6 +24,7 @@ public class UserAppServiceTest {
     UserAppService service;
 
     @Test
+    @DisplayName("Deve registrar um usuario e salvar no banco")
     public void registerNewUserHanleTest() {
         RegisterUserCommand cmd = RegisterUserCommand.builder()
                 .username("usr")
