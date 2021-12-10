@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/eadauthuser
-    username: "******"
-    password: "*****"
+    url: jdbc:postgresql://localhost:5432/authuser
+    username: "postgres"
+    password: "root"
   jpa:
     hibernate:
 #      criar tabelas automatico
