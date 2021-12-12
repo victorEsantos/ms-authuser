@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.UUID;
 
 import static java.util.Objects.nonNull;
 
@@ -39,9 +38,7 @@ public class UserAppService {
                 .lastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")))
                 .build();
 
-        var newUser = repository.save(user);
-
-        return newUser;
+        return repository.save(user);
     }
 
     public void handle(final UpdateUserPasswordCommand cmd) {

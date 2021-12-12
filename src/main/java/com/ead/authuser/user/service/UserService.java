@@ -1,7 +1,6 @@
 package com.ead.authuser.user.service;
 
 import com.ead.authuser.user.domain.model.User;
-import com.ead.authuser.user.specification.SpecificationTemplate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;

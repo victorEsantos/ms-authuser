@@ -3,7 +3,6 @@ package com.ead.authuser.user.service.impl;
 import com.ead.authuser.user.domain.model.User;
 import com.ead.authuser.user.repository.UserRepository;
 import com.ead.authuser.user.service.UserService;
-import com.ead.authuser.user.specification.SpecificationTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -16,7 +16,7 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @DisplayName("Teste Serviço de usuario")
-public class UserAppServiceTest {
+class UserAppServiceTest {
     @Mock
     UserRepository repository;
 
@@ -25,7 +25,7 @@ public class UserAppServiceTest {
 
     @Test
     @DisplayName("Deve registrar um usuario e salvar no banco")
-    public void registerNewUserHanleTest() {
+    void registerNewUserHanleTest() {
         RegisterUserCommand cmd = RegisterUserCommand.builder()
                 .username("usr")
                 .email("email@email.com")
