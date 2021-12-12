@@ -92,6 +92,10 @@ public class User extends RepresentationModel<User> implements Serializable {
         this.setFullName(fullName);
         this.setPhoneNumber(phoneNumber);
         this.setCpf(cpf);
-        this.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
+    }
+
+    @PreUpdate
+    public void setLastUpdateDate(){
+        this.lastUpdateDate = LocalDateTime.now(ZoneId.of("UTC"));
     }
 }

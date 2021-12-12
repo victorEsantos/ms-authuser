@@ -50,7 +50,6 @@ public class UserAppService {
 
         if (isPassEquals) {
             user.setPassword(cmd.getPassword());
-            user.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
 
             repository.save(user);
         } else {
@@ -63,7 +62,6 @@ public class UserAppService {
 
         if (nonNull(user)) {
             user.setImageUrl(cmd.getImageUrl());
-            user.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
 
             repository.save(user);
         }
