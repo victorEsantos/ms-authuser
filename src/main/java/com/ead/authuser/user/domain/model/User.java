@@ -61,6 +61,10 @@ public class User extends RepresentationModel<User> implements Serializable {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<UserCourse> userCourses;
 
+    public UserCourse convertToUserCourse(UUID courseId){
+        return new UserCourse(null, this, courseId);
+    }
+
     @Builder
     public User(UUID id, String username, String email, String password, String fullName, UserStatus userStatus,
                 UserType userType, String phoneNumber, String cpf, String imageUrl, LocalDateTime creationDate,
