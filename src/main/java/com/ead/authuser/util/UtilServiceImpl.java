@@ -10,10 +10,10 @@ import java.util.UUID;
 public class UtilServiceImpl implements UtilsService{
 
     @Value("${ead.api.url.course}")
-    String COURSE_REQUEST_URL;
+    String courseRequestUrl;
 
     public String createUrl(UUID userId, Pageable pageable){
-        return COURSE_REQUEST_URL + "/courses?userId=" + userId + "&page=" + pageable.getPageNumber() + "&size="
+        return courseRequestUrl + "/courses?userId=" + userId + "&page=" + pageable.getPageNumber() + "&size="
                 + pageable.getPageSize() + "sort=" + pageable.getSort().toString().replaceAll(": ", ",");
     }
 }
