@@ -27,7 +27,6 @@ public class UserAppService {
     public User handle(final RegisterUserCommand cmd) {
         User user = User
                 .builder()
-                .id(UUID.randomUUID())
                 .username(cmd.getUsername())
                 .email(cmd.getEmail())
                 .password(cmd.getPassword())
@@ -40,9 +39,9 @@ public class UserAppService {
                 .lastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")))
                 .build();
 
-        repository.save(user);
+        var newUser = repository.save(user);
 
-        return user;
+        return newUser;
     }
 
     public void handle(final UpdateUserPasswordCommand cmd) {
