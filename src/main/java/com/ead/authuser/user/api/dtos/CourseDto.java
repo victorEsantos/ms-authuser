@@ -11,7 +11,7 @@ import java.util.UUID;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CourseDto {
 
-    private UUID id;
+    private UUID courseId;
     private String name;
     private String description;
     private String imageUrl;

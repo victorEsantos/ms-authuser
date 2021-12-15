@@ -1,5 +1,7 @@
 package com.ead.authuser.user.service.impl;
 
+import com.ead.authuser.course.domain.model.UserCourse;
+import com.ead.authuser.course.repository.UserCourseRepository;
 import com.ead.authuser.user.domain.model.User;
 import com.ead.authuser.user.repository.UserRepository;
 import com.ead.authuser.user.service.UserService;
@@ -27,11 +29,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findById(UUID userId) {
         return repository.findById(userId);
-    }
-
-    @Override
-    public void delete(User userId) {
-        repository.delete(userId);
     }
 
     @Override

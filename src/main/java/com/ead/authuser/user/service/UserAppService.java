@@ -1,5 +1,7 @@
 package com.ead.authuser.user.service;
 
+import com.ead.authuser.course.domain.model.UserCourse;
+import com.ead.authuser.course.repository.UserCourseRepository;
 import com.ead.authuser.user.domain.enums.UserStatus;
 import com.ead.authuser.user.domain.enums.UserType;
 import com.ead.authuser.user.domain.model.User;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 
 import static java.util.Objects.nonNull;
 
@@ -22,6 +25,9 @@ import static java.util.Objects.nonNull;
 public class UserAppService {
     @Autowired
     UserRepository repository;
+
+    @Autowired
+    UserCourseRepository userCourseRepository;
 
     public User handle(final RegisterUserCommand cmd) {
         User user = User
@@ -75,6 +81,12 @@ public class UserAppService {
 
     public void handle(DeleteUserCommand cmd) {
         var user = repository.findById(cmd.getId()).orElseThrow(() -> new ObjectNotFoundException("USER NOT FOUND"));
+
+        List<UserCourse> userCourseList = userCourseRepository.findAllUserCourseIntoUser(user.getId());
+
+        if(!userCourseList.isEmpty())
+            userCourseRepository.deleteAll(userCourseList);
+
         repository.delete(user);
     }
 }
