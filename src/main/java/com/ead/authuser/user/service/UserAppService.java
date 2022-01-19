@@ -1,5 +1,6 @@
 package com.ead.authuser.user.service;
 
+import com.ead.authuser.clients.CourseClient;
 import com.ead.authuser.course.domain.model.UserCourse;
 import com.ead.authuser.course.repository.UserCourseRepository;
 import com.ead.authuser.user.domain.enums.UserStatus;
@@ -28,6 +29,9 @@ public class UserAppService {
 
     @Autowired
     UserCourseRepository userCourseRepository;
+
+    @Autowired
+    CourseClient courseClient;
 
     public User handle(final RegisterUserCommand cmd) {
         User user = User
@@ -81,11 +85,18 @@ public class UserAppService {
 
     public void handle(DeleteUserCommand cmd) {
         var user = repository.findById(cmd.getId()).orElseThrow(() -> new ObjectNotFoundException("USER NOT FOUND"));
+        var deleteUserCourseInCourse = false;
 
         List<UserCourse> userCourseList = userCourseRepository.findAllUserCourseIntoUser(user.getId());
 
-        if(!userCourseList.isEmpty())
+        if(!userCourseList.isEmpty()){
             userCourseRepository.deleteAll(userCourseList);
+            deleteUserCourseInCourse = true;
+        }
+
+        if(deleteUserCourseInCourse){
+            courseClient.deleteUserInCourse(user.getId());
+        }
 
         repository.delete(user);
     }

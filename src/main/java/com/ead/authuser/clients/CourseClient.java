@@ -5,6 +5,7 @@ import com.ead.authuser.user.api.dtos.ResponsePageDto;
 import com.ead.authuser.util.UtilServiceImpl;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -28,6 +29,9 @@ public class CourseClient {
     @Autowired
     UtilServiceImpl utilService;
 
+    @Value("${ead.api.url.course}")
+    String courseRequestUrl;
+
     public Page<CourseDto> getAllCoursesByUser(UUID userId, Pageable pageable) {
         List<CourseDto> searchResult = null;
         String url = utilService.createUrl(userId, pageable);
@@ -43,5 +47,11 @@ public class CourseClient {
         }
 
         return new PageImpl<>(searchResult);
+    }
+
+    public void deleteUserInCourse(UUID userId){
+        String url = courseRequestUrl + "/courses/users/" + userId;
+
+        restTemplate.exchange(url, HttpMethod.DELETE, null, String.class);
     }
 }
